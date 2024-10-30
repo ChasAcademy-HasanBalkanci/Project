@@ -1,6 +1,6 @@
-import json
+import json # For handling JSON data.
 from logger import logger
-from email_notifier import EmailNotifier
+from email_notifier import EmailNotifier 
 # Create an AlarmManager class to handle alarms and notifications.
 class AlarmManager:
     # Initialize the AlarmManager with an empty list of alarms and an email notifier.

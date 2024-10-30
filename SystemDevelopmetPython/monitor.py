@@ -22,14 +22,21 @@ class Monitor:
             print("No active monitoring sessions.")
             logger.log("No_Active_Monitoring_Sessions")
             return
-
+    
         cpu_usage = psutil.cpu_percent()
         memory = psutil.virtual_memory()
         disk = psutil.disk_usage('/')
-        # Print monitoring results on the screen.
-        print(f"CPU Usage: {cpu_usage:.1f}%")
-        print(f"Memory Usage: {memory.percent:.1f}%") # If it requires details, the following can be used.({memory.used / (1024**3):.1f} GB out of {memory.total / (1024**3):.1f} GB used)")
-        print(f"Disk Usage: {disk.percent:.1f}%")
+    
+        # Calculate values in GB
+        memory_used_gb = memory.used / (1024**3)
+        memory_total_gb = memory.total / (1024**3)
+        disk_used_gb = disk.used / (1024**3)
+        disk_total_gb = disk.total / (1024**3)
+    
+        # Print monitoring results on the screen with the requested format
+        print(f"CPU Usage: {cpu_usage:.0f}%")
+        print(f"Memory Usage: {memory.percent:.0f}% ({memory_used_gb:.1f} GB out of {memory_total_gb:.1f} GB used)")
+        print(f"Disk Usage: {disk.percent:.0f}% ({disk_used_gb:.0f} GB out of {disk_total_gb:.0f} GB used)")
     
     # This method monitors system resources if monitoring is active (firstly user must choice 1 from the main menu)
     def monitor_system(self, alarm_manager): 

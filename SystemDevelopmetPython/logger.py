@@ -1,6 +1,6 @@
 import os
-from datetime import datetime
-
+from datetime import datetime # Importing datetime module for timestamping
+# Create a Logger class to handle logging messages.
 class Logger:
     def __init__(self):
         self.log_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'logs')
