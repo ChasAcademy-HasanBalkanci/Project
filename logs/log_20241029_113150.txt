@@ -1,0 +1,15 @@
+[2024-10-29 11:31:50] Email_Notification_Setup_Incomplete
+[2024-10-29 11:31:50] Application_Started
+[2024-10-29 11:31:59] User_Input_2
+[2024-10-29 11:31:59] No_Active_Monitoring_Sessions
+[2024-10-29 11:32:15] User_Input_1
+[2024-10-29 11:32:15] Monitoring_Started
+[2024-10-29 11:32:18] User_Input_2
+[2024-10-29 11:32:25] User_Input_3
+[2024-10-29 11:32:30] Alarm_Set_CPU_25
+[2024-10-29 11:32:38] Alarm_Set_Memory_67
+[2024-10-29 11:32:44] Alarm_Set_Disk_23
+[2024-10-29 11:32:49] Alarm_Set_Memory_89
+[2024-10-29 11:32:55] Alarm_Set_CPU_15
+[2024-10-29 11:33:00] User_Input_4
+[2024-10-29 11:33:13] User_Input_5

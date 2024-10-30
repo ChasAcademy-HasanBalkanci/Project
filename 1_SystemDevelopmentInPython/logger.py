@@ -1,10 +1,8 @@
-from datetime import datetime
+import logging
 
 class Logger:
-    def __init__(self, filename):
-        self.filename = filename
+    def __init__(self, log_file):
+        logging.basicConfig(filename=log_file, level=logging.INFO)
 
     def log(self, message):
-        with open(self.filename, 'a') as f:
-            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            f.write(f"{timestamp} - {message}\n")
+        logging.info(message)
