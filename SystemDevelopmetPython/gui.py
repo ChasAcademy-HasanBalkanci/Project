@@ -1,9 +1,11 @@
-import tkinter as tk
-from tkinter import ttk
-import threading
-import time
-import psutil
 
+import tkinter as tk # Tkinter allows this application to present system monitoring data in a user-friendly, graphical format
+from tkinter import ttk #  provide a more modern look to the GUI elements.
+import threading # allowing certain operations to run concurrently with the main GUI thread.
+import time # adding delays or measuring time intervals in the program.
+import psutil # Provides access to system-related information, such as CPU usage, memory usage, disk usage, etc.
+
+# Function to update the GUI with system usage data
 class MonitoringGUI:
     def __init__(self, alarm_manager):
         self.alarm_manager = alarm_manager
@@ -24,7 +26,7 @@ class MonitoringGUI:
         self.root.title("System Monitoring")
         self.root.geometry("600x400")
         self.create_widgets()
-    def create_widgets(self):
+    def create_widgets(self): # Create the widgets on the GUI
         # Usage Frames
         usage_frame = ttk.LabelFrame(self.root, text="System Usage")
         usage_frame.pack(padx=10, pady=10, fill=tk.BOTH, expand=True)
@@ -66,8 +68,10 @@ class MonitoringGUI:
             else:
                 break
 
-            time.sleep(2)
-    def update_gui(self, cpu_percent, memory_percent, disk_percent):
+            time.sleep(2) # It can be arranged according to the requirements of the application
+    
+    # Update the GUI with the new values
+    def update_gui(self, cpu_percent, memory_percent, disk_percent): 
         self.cpu_progress['value'] = cpu_percent
         self.cpu_label['text'] = f"CPU: {cpu_percent:.1f}%"
 
@@ -77,7 +81,8 @@ class MonitoringGUI:
         self.disk_progress['value'] = disk_percent
         self.disk_label['text'] = f"Disk: {disk_percent:.1f}%"
 
-    def check_alarms(self, cpu_percent, memory_percent, disk_percent):
+    # Check and display alarms based on the current system usage
+    def check_alarms(self, cpu_percent, memory_percent, disk_percent): 
         active_alarms = []
 
         for threshold in self.alarm_manager.alarms['CPU']:
@@ -98,7 +103,8 @@ class MonitoringGUI:
                 self.alarms_text.insert(tk.END, alarm + "\n")
         else:
             self.alarms_text.insert(tk.END, "No active alarms")
-
+    
+    # Start the monitoring GUI and run the update values in a separate thread
     def run(self):
         self.create_gui()
         self.running = True
@@ -108,7 +114,7 @@ class MonitoringGUI:
         if self.root:
             self.root.protocol("WM_DELETE_WINDOW", self.on_closing)
             self.root.mainloop()
-
+    # Stop the monitoring GUI and join the update values thread
     def on_closing(self):
         self.running = False
         if self.root:
@@ -116,7 +122,7 @@ class MonitoringGUI:
             self.root.destroy()
         if self.update_thread:
             self.update_thread.join(timeout=2)
-
+    # Stop the monitoring GUI and join the update values thread
     def stop(self):
         self.running = False
         if self.root:

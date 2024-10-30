@@ -1,15 +1,16 @@
-import time
-import sys
-import select
-import os
+import sys # for handling command-line arguments
+import select # for Unix-based systems to check if there's any input available on the standard input (stdin)
+import os # for checking system status
+
 
 class ConsoleInterface:
+    # Initialize the ConsoleInterface with a Monitor, AlarmSystem, Logger, and EmailNotifier.
     def __init__(self, monitor, alarm_system, logger, email_notifier):
         self.monitor = monitor
         self.alarm_system = alarm_system
         self.logger = logger
         self.email_notifier = email_notifier
-
+    # Check if the program is running and display the list of active monitoring.
     def run(self):
         while True:
             self.display_menu()
@@ -33,7 +34,7 @@ class ConsoleInterface:
                 break
             else:
                 print("Invalid choice. Please try again.")
-
+    # Display the main menu for the ConsoleInterface.
     def display_menu(self):
         print("\n--- System Monitor Menu ---")
         print("1. Start monitoring")
@@ -43,11 +44,11 @@ class ConsoleInterface:
         print("5. Start monitoring mode")
         print("6. Remove alarm")
         print("7. Exit")
-
+    # Start monitoring the system.
     def start_monitoring(self):
         self.monitor.start_monitoring()
         print("Monitoring started.")
-
+    # List the active monitoring data.
     def list_active_monitoring(self):
         if not self.monitor.is_monitoring:
             print("No monitoring is active.")
@@ -57,7 +58,7 @@ class ConsoleInterface:
             print(f"Memory usage: {data['memory']['percent']}% ({data['memory']['used'] / (1024**3):.1f} GB out of {data['memory']['total'] / (1024**3):.1f} GB used)")
             print(f"Disk usage: {data['disk']['percent']}% ({data['disk']['used'] / (1024**3):.1f} GB out of {data['disk']['total'] / (1024**3):.1f} GB used)")
         input("Press Enter to return to the main menu...")
-
+    # Create alarms for monitoring system usage.
     def create_alarms(self):
         print("\n--- Create Alarms ---")
         print("1. CPU usage")
@@ -81,14 +82,14 @@ class ConsoleInterface:
                     print("Invalid threshold. Please enter a number between 0 and 100.")
             except ValueError:
                 print("Invalid input. Please enter a number between 0 and 100.")
-
+    # Show the current alarms set for monitoring system usage.
     def show_alarms(self):
         alarms = self.alarm_system.get_alarms()
         for alarm_type, thresholds in alarms.items():
             for threshold in thresholds:
                 print(f"{alarm_type.capitalize()} alarm {threshold}%")
         input("Press Enter to return to the main menu...")
-
+    
     def start_monitoring_mode(self):
         print("Monitoring mode started. Press Enter to return to the main menu.")
         self.monitor.start_monitoring()
@@ -102,7 +103,7 @@ class ConsoleInterface:
             if self._check_for_input():
                 break
         self.monitor.stop_monitoring()
-
+    # Check if there's any input available on the standard input (stdin) for Unix-based systems.
     def remove_alarm(self):
         alarms = self.alarm_system.get_alarms()
         print("\n--- Remove Alarms ---")
@@ -128,7 +129,7 @@ class ConsoleInterface:
                 print("Invalid choice. Please try again.")
         except ValueError:
             print("Invalid input. Please enter a number.")
-
+    # Check if there's any input available on the standard input (stdin) for NT (Microsoft windows) or Unix-based systems.
     def _check_for_input(self):
         if os.name == 'nt':  # For Windows
             import msvcrt

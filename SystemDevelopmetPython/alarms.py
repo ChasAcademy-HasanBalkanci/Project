@@ -58,11 +58,20 @@ class AlarmManager:
     # Show current alrms sorting by threshold
     def show_alarms(self):
         print("\n--- Current Alarms ---")
+        all_alarms = []
         for alarm_type, thresholds in self.alarms.items():
             if thresholds:
-                print(f"{alarm_type}: {', '.join(map(str, sorted(thresholds)))}%") # Sort and join thresholds
-            else:
-                print(f"{alarm_type}: No alarms set")
+                print(f"\n--- {alarm_type} Alarm ---")
+                for threshold in sorted(thresholds):
+                    index = len(all_alarms) + 1
+                    print(f"{index}. {alarm_type} alarm {threshold}%")
+                    all_alarms.append((alarm_type, threshold))
+    
+        if not all_alarms:
+            print("No alarms configured.")
+        
+        print("\nPress Enter to return to the main menu.")
+        input()  # Wait for user input before returning
 
     def remove_alarms(self):
         while True:

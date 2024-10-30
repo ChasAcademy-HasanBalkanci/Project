@@ -1,26 +1,34 @@
-# System Monitoring Application
+#                                        --System Monitoring Application--
 
 ## Overview
-This Python application provides a comprehensive system monitoring solution with features for real-time monitoring, alarm configuration, and a graphical user interface. It's designed to help users keep track of system resources and receive notifications for critical events.
+This Python application provides a comprehensive system monitoring solution with features for real-time monitoring, 
+alarm configuration, and a graphical user interface. 
+It's designed to help users keep track of system resources and receive notifications for critical events.
+It can be used not only separately but also it can be integrate with AWS CloudWatch, AWS QickSight, Grafana and Prometheus after making critical arrangment.
 
 ## Features
 - Real-time system monitoring
+
 - Configurable alarms for various system metrics. It can be entegrated any tool such as AWS CloudWatch, AWS QickSight, Grafana and so on.
+
 - Email notifications for critical events.
     ### IMPORTANT : 
         For securely storing credentials, you should use one of the following services:
         1.HashiCorp Vault, 2.AWS Secrets Manager, 3.Azure Key Vault. 
         Dont write the credantials in the code (email_notifier.py), which deploys to git.
+
 - Graphical User Interface (GUI) for easy interaction.
+
 - Logging functionality for tracking application events.
-    If you want you can arrange the file whre the logs sture. You can use: 
+    If you want you can arrange the file where the logs store. You can use: 
     "os.chdir("The path of the directory you want to store.")
 
 ## Prerequisites
 - Python 3.12
 - Required Python packages (install via `pip install -r requirements.txt`):
   - sendgrid (for email notifications)
-  - [Any other external libraries used in your project]
+  - psutil (for monitoring the system)
+  
 
 ## Setup
 1.  The repository: 
@@ -56,3 +64,4 @@ hasan.balkanci@chasacademy.se
 
 2. Install required packages:
     pip install -r requirements.txt
+

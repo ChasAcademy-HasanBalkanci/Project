@@ -1,3 +1,4 @@
+# Creates and displays a menu for a System Monitoring Application.
 def display_menu():
     menu_options = [
         "Start Monitoring",
