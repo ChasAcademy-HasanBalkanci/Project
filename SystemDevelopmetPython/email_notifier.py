@@ -1,3 +1,4 @@
+# Import necessary libraries and modules. Note that you need to install the 'SendGrid' library first using pip:
 import os
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
@@ -8,13 +9,14 @@ from logger import logger
 1.HashiCorp Vault, 2.AWS Secrets Manager, 3.Azure Key Vault. 
 Dont write the credantials here, which deploys to git.
 '''
-
+# Define the EmailNotifier class to send email notifications. 
 class EmailNotifier:
     def __init__(self):
         self.api_key = os.environ.get('SENDGRID_API_KEY')
         self.from_email = os.environ.get('FROM_EMAIL')
         self.to_email = os.environ.get('TO_EMAIL')
 
+    # Method to send the email notification.
     def send_notification(self, subject, body):
         if not all([self.api_key, self.from_email, self.to_email]):
             logger.log("Email_Notification_Failed_Incomplete_Setup")

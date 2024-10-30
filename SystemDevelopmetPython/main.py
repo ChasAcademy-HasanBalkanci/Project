@@ -8,9 +8,10 @@ from gui import MonitoringGUI
 
 # Function to check if email setup is complete
 def check_email_setup():
-    required_vars = ['SENDGRID_API_KEY', 'FROM_EMAIL', 'TO_EMAIL']
-    missing_vars = [var for var in required_vars if not os.environ.get(var)]
+    required_vars = ['SENDGRID_API_KEY', 'FROM_EMAIL', 'TO_EMAIL'] 
+    missing_vars = [var for var in required_vars if not os.environ.get(var)] # Check if all required environment variables are set
     
+    # Log missing environment variables if any
     if missing_vars:
         print("Warning: Email notification setup is incomplete.")
         print("Please set the following environment variables:")
@@ -27,7 +28,7 @@ def main():
     # Initialize key components of the application
     monitor = Monitor()
     alarm_manager = AlarmManager()
-    gui = MonitoringGUI(alarm_manager)
+    gui = MonitoringGUI(alarm_manager) # Initialize GUI with alarm manager for mode monitoring
     
     # Log application start
     logger.log("Application_Started")
@@ -35,7 +36,7 @@ def main():
     # Main application loop
     while True:
         # Display menu and get user choice
-        choice = display_menu()
+        choice = display_menu() 
         logger.log(f"User_Input_{choice}")
         
         # Handle user choices
@@ -60,7 +61,7 @@ def main():
             # Exit the application
             logger.log("Application_Exited")
             print("Exiting the application. Goodbye!")
-            break
+            break # Exit the loop
         else:
             # Handle invalid input
             print("Invalid choice. Please try again.")

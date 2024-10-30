@@ -4,17 +4,19 @@ import threading
 import sys
 import os
 from logger import logger
-
+# Create a Monitor class to handle system monitoring.
 class Monitor:
     def __init__(self):
-        self.monitoring_active = False
-        self.monitoring_thread = None
+        self.monitoring_active = False # Flag to indicate if monitoring is active.
+        self.monitoring_thread = None 
 
+    # Start monitoring the system. if in the main.py file, user choice 1
     def start_monitoring(self):
         self.monitoring_active = True
         logger.log("Monitoring_Started")
         print("Monitoring started.")
 
+    # List active monitoring sessions. if in the main.py file, user choice 2
     def list_active_monitoring(self):
         if not self.monitoring_active:
             print("No active monitoring sessions.")
@@ -24,11 +26,11 @@ class Monitor:
         cpu_usage = psutil.cpu_percent()
         memory = psutil.virtual_memory()
         disk = psutil.disk_usage('/')
-
+        # Print monitoring results on the screen.
         print(f"CPU Usage: {cpu_usage:.1f}%")
-        print(f"Memory Usage: {memory.percent:.1f}% ({memory.used / (1024**3):.1f} GB out of {memory.total / (1024**3):.1f} GB used)")
+        print(f"Memory Usage: {memory.percent:.1f}%") # If it requires details, the following can be used.({memory.used / (1024**3):.1f} GB out of {memory.total / (1024**3):.1f} GB used)")
         print(f"Disk Usage: {disk.percent:.1f}%")
-
+    
     def monitor_system(self, alarm_manager):
         while self.monitoring_active:
             cpu_usage = psutil.cpu_percent()
@@ -40,20 +42,21 @@ class Monitor:
 
             alarm_manager.check_alarms(cpu_usage, memory_usage, disk_usage)
             time.sleep(1)
-
+    # Start monitoring mode and monitor system resources. if in the main.py file, user choice 6.
+    # IT is integrated with the AlarmManager class to send notifications.
     def start_monitoring_mode(self, alarm_manager):
         self.monitoring_active = True
         logger.log("Monitoring_Mode_Started")
         print("Starting monitoring mode...")
         print("Press 'q' to quit or Ctrl+C to interrupt.")
 
-        self.monitoring_thread = threading.Thread(target=self.monitor_system, args=(alarm_manager,))
+        self.monitoring_thread = threading.Thread(target=self.monitor_system, args=(alarm_manager,)) 
         self.monitoring_thread.start()
 
         try:
             while self.monitoring_active:
                 if sys.stdin.isatty():
-                    if os.name == 'nt':  # Windows
+                    if os.name == 'nt':  # Windows. If you use Linux or macOS, use 'import msvcrt' and 'if msvcrt.kbhit():' instead of 'if sys.stdin.isatty():'.
                         import msvcrt
                         if msvcrt.kbhit():
                             if msvcrt.getch().decode().lower() == 'q':
@@ -64,11 +67,11 @@ class Monitor:
                             if sys.stdin.read(1).lower() == 'q':
                                 break
                 time.sleep(0.1)
-        except KeyboardInterrupt:
+        except KeyboardInterrupt: # Handle interruption gracefully.
             pass
         finally:
-            self.stop_monitoring()
-
+            self.stop_monitoring() # Stop monitoring and cleanup.
+    # Stop monitoring the system. if click "q" in the monitoring mode.
     def stop_monitoring(self):
         self.monitoring_active = False
         if self.monitoring_thread:
