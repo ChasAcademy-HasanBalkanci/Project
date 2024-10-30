@@ -1,8 +1,9 @@
 import json
 from logger import logger
 from email_notifier import EmailNotifier
-
+# Create an AlarmManager class to handle alarms and notifications.
 class AlarmManager:
+    # Initialize the AlarmManager with an empty list of alarms and an email notifier.
     def __init__(self):
         self.alarms = {
             'CPU': [],
@@ -10,10 +11,12 @@ class AlarmManager:
             'Disk': []
         }
         self.email_notifier = EmailNotifier()
-        self.alarm_file = 'configured_alarms.json'
+        self.alarm_file = 'configured_alarms.json' # File to store configured alarms.
         self.load_alarms()
 
-    def configure_alarms(self):
+    # allows the user to configure multiple alarms in one session before returning to the main menu, 
+    # and ensures that all changes are saved when they're done configuring.
+    def configure_alarms(self): 
         while True:
             print("\n--- Configure Alarms ---")
             print("1. CPU Usage")
@@ -25,10 +28,14 @@ class AlarmManager:
             if choice == '4':
                 break
             elif choice in ['1', '2', '3']:
-                self._set_alarm(choice)
+                self._set_alarm(choice) # setting of the alarm thresholds is handled in the _set_alarm method
             else:
                 print("Invalid choice. Please try again.")
         self.save_alarms()
+
+    '''This method allows users to set alarm thresholds for CPU, Memory, or Disk usage. 
+    It includes input validation to ensure that only valid threshold values 
+    (integers between 1 and 100) are accepted and stored.'''
 
     def _set_alarm(self, choice):
         alarm_types = {
@@ -36,7 +43,7 @@ class AlarmManager:
             '2': 'Memory',
             '3': 'Disk'
         }
-        alarm_type = alarm_types[choice]
+        alarm_type = alarm_types[choice] # Get alarm type from choice
         threshold = input(f"Enter {alarm_type} usage threshold (1-100): ")
         try:
             threshold = int(threshold)
@@ -48,12 +55,12 @@ class AlarmManager:
                 print("Invalid threshold. Please enter a number between 1 and 100.")
         except ValueError:
             print("Invalid input. Please enter a number.")
-
+    # Show current alrms sorting by threshold
     def show_alarms(self):
         print("\n--- Current Alarms ---")
         for alarm_type, thresholds in self.alarms.items():
             if thresholds:
-                print(f"{alarm_type}: {', '.join(map(str, thresholds))}%")
+                print(f"{alarm_type}: {', '.join(map(str, sorted(thresholds)))}%") # Sort and join thresholds
             else:
                 print(f"{alarm_type}: No alarms set")
 
@@ -62,20 +69,21 @@ class AlarmManager:
             print("\n--- Remove Alarms ---")
             all_alarms = []
             for alarm_type, thresholds in self.alarms.items():
-                for threshold in thresholds:
-                    all_alarms.append((alarm_type, threshold))
-
+                if thresholds:
+                    print(f"\n--- {alarm_type} Alarm ---")
+                    for threshold in sorted(thresholds):
+                        index = len(all_alarms) + 1
+                        print(f"{index}. {alarm_type} alarm {threshold}%")
+                        all_alarms.append((alarm_type, threshold))
+    
             if not all_alarms:
                 print("No alarms configured.")
                 return
-
-            print("Select a configured alarm to delete:")
-            for i, (alarm_type, threshold) in enumerate(all_alarms, 1):
-                print(f"{i}. {alarm_type} alarm {threshold}%")
-            print(f"{len(all_alarms) + 1}. Back to Main Menu")
-
+    
+            print(f"\n{len(all_alarms) + 1}. Back to Main Menu")
+    
             try:
-                choice = int(input("Enter your choice: "))
+                choice = int(input("\nEnter your choice: "))
                 if choice == len(all_alarms) + 1:
                     break
                 elif 1 <= choice <= len(all_alarms):
@@ -88,7 +96,7 @@ class AlarmManager:
                     print("Invalid choice. Please try again.")
             except ValueError:
                 print("Invalid input. Please enter a number.")
-
+    # Check if any of the configured alarms have been triggered and send notifications if so.
     def check_alarms(self, cpu_percent, memory_percent, disk_percent):
         triggered_alarms = []
         if any(cpu_percent > threshold for threshold in self.alarms['CPU']):
@@ -103,11 +111,11 @@ class AlarmManager:
             print("\nALARM: " + alarm_message)
             logger.log("Alarm_Triggered")
             self.email_notifier.send_notification("System Monitor Alarm", alarm_message)
-
+    
     def save_alarms(self):
         with open(self.alarm_file, 'w') as f:
             json.dump(self.alarms, f)
-
+    # allows the AlarmManager to persist alarm configurations between program runs.
     def load_alarms(self):
         try:
             with open(self.alarm_file, 'r') as f:

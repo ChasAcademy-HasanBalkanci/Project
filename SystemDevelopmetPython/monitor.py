@@ -31,7 +31,8 @@ class Monitor:
         print(f"Memory Usage: {memory.percent:.1f}%") # If it requires details, the following can be used.({memory.used / (1024**3):.1f} GB out of {memory.total / (1024**3):.1f} GB used)")
         print(f"Disk Usage: {disk.percent:.1f}%")
     
-    def monitor_system(self, alarm_manager):
+    # This method monitors system resources if monitoring is active (firstly user must choice 1 from the main menu)
+    def monitor_system(self, alarm_manager): 
         while self.monitoring_active:
             cpu_usage = psutil.cpu_percent()
             memory_usage = psutil.virtual_memory().percent
@@ -43,7 +44,7 @@ class Monitor:
             alarm_manager.check_alarms(cpu_usage, memory_usage, disk_usage)
             time.sleep(1)
     # Start monitoring mode and monitor system resources. if in the main.py file, user choice 6.
-    # IT is integrated with the AlarmManager class to send notifications.
+    # It is integrated with the AlarmManager class to send notifications.
     def start_monitoring_mode(self, alarm_manager):
         self.monitoring_active = True
         logger.log("Monitoring_Mode_Started")
