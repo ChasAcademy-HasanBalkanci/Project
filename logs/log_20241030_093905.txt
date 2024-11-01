@@ -1,4 +1,0 @@
-[2024-10-30 09:39:05] Email_Notification_Setup_Incomplete
-[2024-10-30 09:39:05] Application_Started
-[2024-10-30 09:40:29] User_Input_8
-[2024-10-30 09:40:29] Application_Exited

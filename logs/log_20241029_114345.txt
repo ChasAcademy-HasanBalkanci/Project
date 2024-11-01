@@ -1,2 +1,0 @@
-[2024-10-29 11:43:45] Email_Notification_Setup_Incomplete
-[2024-10-29 11:43:45] Application_Started

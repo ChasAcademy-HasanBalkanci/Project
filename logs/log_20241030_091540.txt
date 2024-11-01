@@ -1,6 +1,0 @@
-[2024-10-30 09:15:40] Email_Notification_Setup_Incomplete
-[2024-10-30 09:15:40] Application_Started
-[2024-10-30 09:15:45] User_Input_2
-[2024-10-30 09:15:45] No_Active_Monitoring_Sessions
-[2024-10-30 09:15:46] User_Input_1
-[2024-10-30 09:15:46] Monitoring_Started

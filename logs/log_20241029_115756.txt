@@ -1,6 +1,0 @@
-[2024-10-29 11:57:57] Email_Notification_Setup_Incomplete
-[2024-10-29 11:57:57] Application_Started
-[2024-10-29 11:58:01] User_Input_8
-[2024-10-29 11:58:01] Invalid_Menu_Choice
-[2024-10-29 11:59:17] User_Input_8
-[2024-10-29 11:59:17] Invalid_Menu_Choice

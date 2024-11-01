@@ -1,9 +1,0 @@
-[2024-10-29 11:29:48] Email_Notification_Setup_Incomplete
-[2024-10-29 11:29:48] Alarms_Loaded_From_File
-[2024-10-29 11:29:48] Application_Started
-[2024-10-29 11:29:58] User_Input_2
-[2024-10-29 11:29:58] No_Active_Monitoring_Sessions
-[2024-10-29 11:30:04] User_Input_1
-[2024-10-29 11:30:04] Monitoring_Started
-[2024-10-29 11:30:15] User_Input_2
-[2024-10-29 11:30:31] User_Input_3
